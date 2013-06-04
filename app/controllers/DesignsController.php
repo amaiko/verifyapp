@@ -21,9 +21,12 @@ class DesignsController extends BaseController {
      */
     public function index()
     {
-        $designs = $this->design->all();
-
+         // $designs = $this->design->all();
+        // return View::make('designs.index', compact('designs'));
+        $designs = DB::table('designs')->get();
         return View::make('designs.index', compact('designs'));
+   
+        
     }
 
     /**
@@ -67,9 +70,18 @@ class DesignsController extends BaseController {
      */
     public function show($id)
     {
-        $design = $this->design->findOrFail($id);
+    	if(!preg_match('/[0-9]+/',$id))
+			{
+			       $designs = DB::table('designs')->where('projectname', '=', $id)->get();
+				   return View::make('designs.show', compact('designs'));
 
-        return View::make('designs.show', compact('design'));
+			}
+		else {
+			$designs = DB::table('designs')->where('id', '=', $id)->get();
+			return View::make('designs.showdesign', compact('designs'));
+			
+		}
+      
     }
 
     /**
@@ -98,7 +110,7 @@ class DesignsController extends BaseController {
      */
     public function update($id)
     {
-        $input = array_except(Input::all(), '_method');
+        /*$input = array_except(Input::all(), '_method');
         $validation = Validator::make($input, Design::$rules);
 
         if ($validation->passes())
@@ -112,7 +124,24 @@ class DesignsController extends BaseController {
         return Redirect::route('designs.edit', $id)
             ->withInput()
             ->withErrors($validation)
-            ->with('message', 'There were validation errors.');
+            ->with('message', 'There were validation errors.');*/
+        $data = array('star1' => "20" ,'star2' => "40" ,'star3' => "60" ,'star4' => "80" ,'star5' => "100" );
+        $input = array_except(Input::all(), '_method');
+        $design = Design::find($id);
+		$key = $input["rating"]; //star1
+		$new = $data[$key]; //100
+		
+		$getDesignValues =  DB::table('designs')->where('id', '=', $id)->first();
+		
+ 		$old = $getDesignValues->rating; //100
+		$voterCount = $getDesignValues->voter; //2
+		$newVoterCount = $voterCount + 1; //3
+		$oldPercentValue = $voterCount * $old;
+		$current = ($new + $oldPercentValue) / $newVoterCount; //100
+		$design->voter = $newVoterCount; //2
+		$design->rating = $current; //100
+		$design->save();
+		return Redirect::route('designs.show', $id);
     }
 
     /**

@@ -17,8 +17,8 @@
         </li>
 
         <li>
-            {{ Form::label('logo_path', 'Logo_path:') }}
-            {{ Form::text('logo_path') }}
+            {{ Form::label('logo', 'Logo:') }}
+            {{ Form::text('logo') }}
         </li>
 
         <li>

@@ -15,6 +15,11 @@ Route::get('/', function()
 	return View::make('home.index');
 });
 
+/*
+Route::model('design','Design');
+Route::get('designs/{design}', function(Design $design){
+	return $design;
+});*/
 Route::resource('projects', 'ProjectsController');
 
 Route::resource('users', 'UsersController');

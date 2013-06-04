@@ -8,11 +8,11 @@ class UsersTableSeeder extends Seeder {
     	// DB::table('users')->delete();
 
         $users = array(
+        	['username' => 'amaiko', 'password' => 'zamika', 'email' => 'amaiko@gmail.com', 'created_at' => new DateTime, 'updated_at' => new DateTime],
 
         );
 
-        // Uncomment the below to run the seeder
-        // DB::table('users')->insert($users);
+         DB::table('users')->insert($users);
     }
 
 }

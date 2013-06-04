@@ -6,4 +6,8 @@ class Project extends Eloquent {
     public static $rules = array(
 		'logo' => 'required'
 	);
+	   public function designs()
+    {
+        return $this->hasMany('Design');
+    }
 }
