@@ -386,10 +386,11 @@ class FormBuilder {
 		// them until we have an array of HTML declarations. Then we will join them
 		// all together into one single HTML element that can be put on the form.
 		$html = array();
-
+		$x = 0;
 		foreach ($list as $value => $display)
 		{
-			$html[] = $this->getSelectOption($display, $value, $selected);
+			$imgPath = "http://localhost:8000/images/msdropdown/stars/" . $value . ".png";
+			$html[] = $this->getSelectOption($display, $value, $imgPath, $selected);
 		}
 
 		// Once we have all of this HTML, we can join this into a single element after
@@ -410,14 +411,14 @@ class FormBuilder {
 	 * @param  string  $selected
 	 * @return string
 	 */
-	protected function getSelectOption($display, $value, $selected)
+	protected function getSelectOption($display, $value, $imgPath, $selected)
 	{
 		if (is_array($display))
 		{
-			return $this->optionGroup($display, $value, $selected);
+			return $this->optionGroup($display, $value, $imgPath, $selected);
 		}
 
-		return $this->option($display, $value, $selected);
+		return $this->option($display, $value, $imgPath, $selected);
 	}
 
 	/**
@@ -448,11 +449,11 @@ class FormBuilder {
 	 * @param  string  $selected
 	 * @return string
 	 */
-	protected function option($display, $value, $selected)
+	protected function option($display, $value, $imgPath, $selected)
 	{
 		$selected = $this->getSelectedValue($value, $selected);
 
-		$options = array('value' => e($value), 'selected' => $selected);
+		$options = array('value' => e($value), 'data-image' => e($imgPath), 'selected' => $selected);
 
 		return '<option'.$this->html->attributes($options).'>'.e($display).'</option>';
 	}

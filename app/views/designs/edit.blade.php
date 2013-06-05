@@ -2,12 +2,12 @@
 
 @section('main')
 <?php 
-$data = array('star1' => "20%" ,'star2' => "40%" ,'star3' => "60%" ,'star4' => "80%" ,'star5' => "100%" );
+$data = array('star1' => "ONE STAR" ,'star2' => "TWO STARS" ,'star3' => "THREE STARS" ,'star4' => "FOUR STARS" ,'star5' => "FIVE STARS" );
  ?>
 <h1>Edit Design</h1>
 {{ Form::model($design, array('method' => 'PATCH', 'route' => array('designs.update', $design->id))) }}
     <ul>
-       <!-- <li>
+       <li>
             {{ Form::label('projectname', 'Projectname:') }}
             {{ Form::text('projectname') }}
         </li>
@@ -21,7 +21,7 @@ $data = array('star1' => "20%" ,'star2' => "40%" ,'star3' => "60%" ,'star4' => "
             {{ Form::label('rating', 'Rating:') }}
             {{ Form::text('rating') }}
         </li>
--->
+
         <li>
             {{ Form::label('Rating', 'rating:') }}
             {{ Form::select('rating', $data, '20%') }}
